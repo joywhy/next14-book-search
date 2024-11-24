@@ -5,19 +5,20 @@ import { ReactNode } from 'react';
 import books from '@/mock/books.json';
 import BookItem from '@/components/book-item';
 import { InferGetServerSidePropsType } from 'next';
+import fetchBooks from '@/lib/fetch-books';
 
-export const getServerSideProps = () => {
+export const getServerSideProps = async () => {
   // 컴포넌트보다 먼저 실행됨
   //서버사이드에서 실행되어서 window 객체 사용할 ㅅ 없업
-
-  return { props: {} };
+  const allBooks = await fetchBooks();
+  return { props: { allBooks } };
 };
 
-export default function Home({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
+export default function Home({
+  allBooks,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   /// 두번 실행됨
-
+  console.log(allBooks);
   return (
     <div className={style.container}>
       <section>
@@ -28,7 +29,7 @@ export default function Home({}: InferGetServerSidePropsType<
       </section>
       <section>
         <h3>등록된 모든 도서</h3>
-        {books.map((book) => (
+        {allBooks.map((book) => (
           <BookItem key={book.id} {...book} />
         ))}
       </section>
