@@ -16,6 +16,8 @@ export const getServerSideProps = async (
 };
 
 function Page({ books }: { books: BookData[] }) {
+  //  const [books,setB]
+
   return (
     <div>
       {books.map((book) => (
