@@ -20,7 +20,7 @@ export const getServerSideProps = async (
 ) => {
   const id = context.query!.id;
   const book = await fetchOneBook(Number(id));
-  console.log(book);
+  // console.log(book);
   return {
     props: { book },
   };
